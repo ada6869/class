@@ -1,0 +1,1884 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <title>API test report</title>
+
+    <meta name="generator" content="HTMLTestRunner 0.8.2.2"/>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+    
+
+<style type="text/css" media="screen">
+
+body        { font-family: Microsoft YaHei,Tahoma,arial,helvetica,sans-serif;padding: 20px; font-size: 120%; }
+
+table       { font-size: 100%; }
+
+/* -- heading ---------------------------------------------------------------------- */
+
+.heading {
+
+    margin-top: 0ex;
+
+    margin-bottom: 1ex;
+
+}
+
+.heading .description {
+
+    margin-top: 4ex;
+
+    margin-bottom: 6ex;
+
+}
+
+/* -- report ------------------------------------------------------------------------ */
+
+#total_row  { font-weight: bold; }
+
+.passCase   { color: #5cb85c; }
+
+.failCase   { color: #d9534f; font-weight: bold; }
+
+.errorCase  { color: #f0ad4e; font-weight: bold; }
+
+.hiddenRow  { display: none; }
+
+.testcase   { margin-left: 2em; }
+
+</style>
+
+
+
+</head>
+
+<body >
+
+<script language="javascript" type="text/javascript">
+
+output_list = Array();
+
+/*level 调整增加只显示通过用例的分类 --Findyou
+
+0:Summary //all hiddenRow
+
+1:Failed  //pt hiddenRow, ft none
+
+2:Pass    //pt none, ft hiddenRow
+
+3:All     //pt none, ft none
+
+*/
+
+function showCase(level) {
+
+    trs = document.getElementsByTagName("tr");
+
+    for (var i = 0; i < trs.length; i++) {
+
+        tr = trs[i];
+
+        id = tr.id;
+
+        if (id.substr(0,2) == 'ft') {
+
+            if (level == 2 || level == 0 ) {
+
+                tr.className = 'hiddenRow';
+
+            }
+
+            else {
+
+                tr.className = '';
+
+            }
+
+        }
+
+        if (id.substr(0,2) == 'pt') {
+
+            if (level < 2) {
+
+                tr.className = 'hiddenRow';
+
+            }
+
+            else {
+
+                tr.className = '';
+
+            }
+
+        }
+
+    }
+
+    //加入【详细】切换文字变化 --Findyou
+
+    detail_class=document.getElementsByClassName('detail');
+
+	//console.log(detail_class.length)
+
+	if (level == 3) {
+
+		for (var i = 0; i < detail_class.length; i++){
+
+			detail_class[i].innerHTML="收起"
+
+		}
+
+	}
+
+	else{
+
+			for (var i = 0; i < detail_class.length; i++){
+
+			detail_class[i].innerHTML="详细"
+
+		}
+
+	}
+
+}
+
+function showClassDetail(cid, count) {
+
+    var id_list = Array(count);
+
+    var toHide = 1;
+
+    for (var i = 0; i < count; i++) {
+
+        //ID修改 点 为 下划线 -Findyou
+
+        tid0 = 't' + cid.substr(1) + '_' + (i+1);
+
+        tid = 'f' + tid0;
+
+        tr = document.getElementById(tid);
+
+        if (!tr) {
+
+            tid = 'p' + tid0;
+
+            tr = document.getElementById(tid);
+
+        }
+
+        id_list[i] = tid;
+
+        if (tr.className) {
+
+            toHide = 0;
+
+        }
+
+    }
+
+    for (var i = 0; i < count; i++) {
+
+        tid = id_list[i];
+
+        //修改点击无法收起的BUG，加入【详细】切换文字变化 --Findyou
+
+        if (toHide) {
+
+            document.getElementById(tid).className = 'hiddenRow';
+
+            document.getElementById(cid).innerText = "详细"
+
+        }
+
+        else {
+
+            document.getElementById(tid).className = '';
+
+            document.getElementById(cid).innerText = "收起"
+
+        }
+
+    }
+
+}
+
+function html_escape(s) {
+
+    s = s.replace(/&/g,'&amp;');
+
+    s = s.replace(/</g,'&lt;');
+
+    s = s.replace(/>/g,'&gt;');
+
+    return s;
+
+}
+
+</script>
+
+<div class='heading'>
+
+<h1 style="font-family: Microsoft YaHei">API test report</h1>
+
+<p class='attribute'><strong>测试人员 : </strong> mongo</p>
+
+<p class='attribute'><strong>开始时间 : </strong> 2019-12-25 17:41:39</p>
+
+<p class='attribute'><strong>合计耗时 : </strong> 0:00:07.204033</p>
+
+<p class='attribute'><strong>测试结果 : </strong> 共 36，通过 26，失败 5，错误 5，通过率= 72.22%</p>
+
+
+
+<p class='description'>前程贷API</p>
+
+</div>
+
+
+
+
+
+<p id='show_detail_line'>
+
+<a class="btn btn-primary" href='javascript:showCase(0)'>概要{ 72.22% }</a>
+
+<a class="btn btn-danger" href='javascript:showCase(1)'>失败{ 5 }</a>
+
+<a class="btn btn-success" href='javascript:showCase(2)'>通过{ 26 }</a>
+
+<a class="btn btn-info" href='javascript:showCase(3)'>所有{ 36 }</a>
+
+</p>
+
+<table id='result_table' class="table table-condensed table-bordered table-hover">
+
+<colgroup>
+
+<col align='left' />
+
+<col align='right' />
+
+<col align='right' />
+
+<col align='right' />
+
+<col align='right' />
+
+<col align='right' />
+
+</colgroup>
+
+<tr id='header_row' class="text-center success" style="font-weight: bold;font-size: 16px;">
+
+    <td>用例集/测试用例</td>
+
+    <td>总计</td>
+
+    <td>通过</td>
+
+    <td>失败</td>
+
+    <td>错误</td>
+
+    <td>详细</td>
+
+</tr>
+
+
+
+<tr class='passClass warning'>
+
+    <td>test_add.AddTest</td>
+
+    <td class="text-center">2</td>
+
+    <td class="text-center">2</td>
+
+    <td class="text-center">0</td>
+
+    <td class="text-center">0</td>
+
+    <td class="text-center"><a href="javascript:showClassDetail('c1',2)" class="detail" id='c1'>详细</a></td>
+
+</tr>
+
+
+
+<tr id='pt1_1' class='hiddenRow'>
+
+    <td class='passCase'><div class='testcase'>test_add_1</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
+
+    <div id='div_pt1_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
+
+    <div id='div_pt1_1' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+pt1_1: {"mobilephone":"#normal_user#","pwd":"#normal_pwd#"}
+15810447878
+{"mobilephone":"15810447878","pwd":"#normal_pwd#"}
+123456
+请求url： http://test.lemonban.com/futureloan/mvc/api/member/login
+请求data： {'mobilephone': '15810447878', 'pwd': '123456'}
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr id='pt1_2' class='hiddenRow'>
+
+    <td class='passCase'><div class='testcase'>test_add_2</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_pt1_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_2'>通过</button>
+
+    <div id='div_pt1_2' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_pt1_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_2'>通过</button>
+
+    <div id='div_pt1_2' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+pt1_2: {"memberId":"#loan_member_id#","title":"测试呀测试呀111","amount":"1000000000","loanRate":"12","loanTerm":"12","loanDateType":"0","repaymemtWay":"5","biddingDays":"10"}
+88538
+请求url： http://test.lemonban.com/futureloan/mvc/api/loan/add
+请求data： {'memberId': '88538', 'title': '测试呀测试呀111', 'amount': '1000000000', 'loanRate': '12', 'loanTerm': '12', 'loanDateType': '0', 'repaymemtWay': '5', 'biddingDays': '10'}
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr class='failClass warning'>
+
+    <td>test_audit.AuditTest</td>
+
+    <td class="text-center">2</td>
+
+    <td class="text-center">1</td>
+
+    <td class="text-center">1</td>
+
+    <td class="text-center">0</td>
+
+    <td class="text-center"><a href="javascript:showClassDetail('c2',2)" class="detail" id='c2'>详细</a></td>
+
+</tr>
+
+
+
+<tr id='pt2_1' class='hiddenRow'>
+
+    <td class='passCase'><div class='testcase'>test_audit_1</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_pt2_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_1'>通过</button>
+
+    <div id='div_pt2_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_pt2_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_1'>通过</button>
+
+    <div id='div_pt2_1' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+pt2_1: 登录成功
+请求url： http://test.lemonban.com/futureloan/mvc/api/member/login
+请求data： {'mobilephone': '15810447878', 'pwd': '123456'}
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr id='ft2_2' class='none'>
+
+    <td class='failCase'><div class='testcase'>test_audit_2</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_ft2_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_2'>失败</button>
+
+    <div id='div_ft2_2' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_ft2_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft2_2'>失败</button>
+
+    <div id='div_ft2_2' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+ft2_2: 审核
+请求url： http://test.lemonban.com/futureloan/mvc/api/loan/audit
+请求data： {'id': '121720', 'status': '4'}
+Traceback (most recent call last):
+  File "D:\【学习】\python\python15\class\venv\lib\site-packages\ddt.py", line 145, in wrapper
+    return func(self, *args, **kwargs)
+  File "D:\【学习】\python\python15\class\API\API_8\testcases\test_audit.py", line 32, in test_audit
+    raise e
+  File "D:\【学习】\python\python15\class\API\API_8\testcases\test_audit.py", line 28, in test_audit
+    self.assertEqual(str(case.expected),actual_code)
+AssertionError: '10001' != '20207'
+- 10001
++ 20207
+
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr class='passClass warning'>
+
+    <td>test_bidloan.bidLoanTest</td>
+
+    <td class="text-center">2</td>
+
+    <td class="text-center">2</td>
+
+    <td class="text-center">0</td>
+
+    <td class="text-center">0</td>
+
+    <td class="text-center"><a href="javascript:showClassDetail('c3',2)" class="detail" id='c3'>详细</a></td>
+
+</tr>
+
+
+
+<tr id='pt3_1' class='hiddenRow'>
+
+    <td class='passCase'><div class='testcase'>test_bidLoan_1</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_pt3_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_1'>通过</button>
+
+    <div id='div_pt3_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_pt3_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_1'>通过</button>
+
+    <div id='div_pt3_1' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+pt3_1: 登录成功
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr id='pt3_2' class='hiddenRow'>
+
+    <td class='passCase'><div class='testcase'>test_bidLoan_2</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_pt3_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_2'>通过</button>
+
+    <div id='div_pt3_2' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_pt3_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_2'>通过</button>
+
+    <div id='div_pt3_2' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+pt3_2: 投标成功
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr class='errorClass warning'>
+
+    <td>test_invest.InvestTest</td>
+
+    <td class="text-center">7</td>
+
+    <td class="text-center">0</td>
+
+    <td class="text-center">2</td>
+
+    <td class="text-center">5</td>
+
+    <td class="text-center"><a href="javascript:showClassDetail('c4',7)" class="detail" id='c4'>详细</a></td>
+
+</tr>
+
+
+
+<tr id='ft4_1' class='none'>
+
+    <td class='errorCase'><div class='testcase'>test_invest_1</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_ft4_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft4_1'>错误</button>
+
+    <div id='div_ft4_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_ft4_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft4_1'>错误</button>
+
+    <div id='div_ft4_1' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+ft4_1: 开始执行测试用例： 管理员正常登录
+{"mobilephone":"#admin_user#","pwd":"#nadmin_pwd#"}
+15814447890
+{"mobilephone":"15814447890","pwd":"#nadmin_pwd#"}
+找不到参数化的值
+Traceback (most recent call last):
+  File "D:\software\python3.8\lib\configparser.py", line 789, in get
+    value = d[option]
+  File "D:\software\python3.8\lib\collections\__init__.py", line 891, in __getitem__
+    return self.__missing__(key)            # support subclasses that define __missing__
+  File "D:\software\python3.8\lib\collections\__init__.py", line 883, in __missing__
+    raise KeyError(key)
+KeyError: 'nadmin_pwd'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\【学习】\python\python15\class\venv\lib\site-packages\ddt.py", line 145, in wrapper
+    return func(self, *args, **kwargs)
+  File "D:\【学习】\python\python15\class\API\API_8\testcases\test_invest.py", line 29, in test_invest
+    case.data=context.replace(case.data)
+  File "D:\【学习】\python\python15\class\API\API_7\common\context.py", line 29, in replace
+    raise e
+  File "D:\【学习】\python\python15\class\API\API_7\common\context.py", line 23, in replace
+    v = config.get('data',g)  # 根据key取配置文件里面的值
+  File "D:\【学习】\python\python15\class\API\API_7\common\config.py", line 24, in get
+    return self.config.get(section,option)
+  File "D:\software\python3.8\lib\configparser.py", line 792, in get
+    raise NoOptionError(option, section)
+configparser.NoOptionError: No option 'nadmin_pwd' in section: 'data'
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr id='ft4_2' class='none'>
+
+    <td class='failCase'><div class='testcase'>test_invest_2</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_ft4_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft4_2'>失败</button>
+
+    <div id='div_ft4_2' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_ft4_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft4_2'>失败</button>
+
+    <div id='div_ft4_2' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+ft4_2: 开始执行测试用例： 管理员加标
+{"memberId":"#loan_member_id#","title":"测试呀测试呀111","amount":"1000000000","loanRate":"12","loanTerm":"12","loanDateType":"0","repaymemtWay":"5","biddingDays":"10"}
+88538
+请求url： http://test.lemonban.com/futureloan/mvc/api/loan/add
+请求data： {'memberId': '88538', 'title': '测试呀测试呀111', 'amount': '1000000000', 'loanRate': '12', 'loanTerm': '12', 'loanDateType': '0', 'repaymemtWay': '5', 'biddingDays': '10'}
+Traceback (most recent call last):
+  File "D:\【学习】\python\python15\class\venv\lib\site-packages\ddt.py", line 145, in wrapper
+    return func(self, *args, **kwargs)
+  File "D:\【学习】\python\python15\class\API\API_8\testcases\test_invest.py", line 43, in test_invest
+    raise e
+  File "D:\【学习】\python\python15\class\API\API_8\testcases\test_invest.py", line 32, in test_invest
+    self.assertEqual(str(case.expected),resp.json()["code"])
+AssertionError: '10001' != None
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr id='ft4_3' class='none'>
+
+    <td class='errorCase'><div class='testcase'>test_invest_3</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_ft4_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft4_3'>错误</button>
+
+    <div id='div_ft4_3' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_ft4_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft4_3'>错误</button>
+
+    <div id='div_ft4_3' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+ft4_3: 开始执行测试用例： 管理员审核
+{"id":"#loan_id#","status":"4"}
+None
+Traceback (most recent call last):
+  File "D:\【学习】\python\python15\class\venv\lib\site-packages\ddt.py", line 145, in wrapper
+    return func(self, *args, **kwargs)
+  File "D:\【学习】\python\python15\class\API\API_8\testcases\test_invest.py", line 29, in test_invest
+    case.data=context.replace(case.data)
+  File "D:\【学习】\python\python15\class\API\API_7\common\context.py", line 33, in replace
+    data = re.sub(p,v,data,count=1)  # 查找替换 count查找的次数
+  File "D:\software\python3.8\lib\re.py", line 208, in sub
+    return _compile(pattern, flags).sub(repl, string, count)
+  File "D:\software\python3.8\lib\re.py", line 325, in _subx
+    template = _compile_repl(template, pattern)
+  File "D:\software\python3.8\lib\re.py", line 316, in _compile_repl
+    return sre_parse.parse_template(repl, pattern)
+  File "D:\software\python3.8\lib\sre_parse.py", line 972, in parse_template
+    s = Tokenizer(source)
+  File "D:\software\python3.8\lib\sre_parse.py", line 228, in __init__
+    string = str(string, 'latin1')
+TypeError: decoding to str: need a bytes-like object, NoneType found
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr id='ft4_4' class='none'>
+
+    <td class='failCase'><div class='testcase'>test_invest_4</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_ft4_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft4_4'>失败</button>
+
+    <div id='div_ft4_4' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_ft4_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft4_4'>失败</button>
+
+    <div id='div_ft4_4' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+ft4_4: 开始执行测试用例： 投资人正常登录
+{"mobilephone":"#normal_user#","password":"#normal_pwd#"}
+15810447878
+{"mobilephone":"15810447878","password":"#normal_pwd#"}
+123456
+请求url： http://test.lemonban.com/futureloan/mvc/api/member/login
+请求data： {'mobilephone': '15810447878', 'password': '123456'}
+Traceback (most recent call last):
+  File "D:\【学习】\python\python15\class\venv\lib\site-packages\ddt.py", line 145, in wrapper
+    return func(self, *args, **kwargs)
+  File "D:\【学习】\python\python15\class\API\API_8\testcases\test_invest.py", line 43, in test_invest
+    raise e
+  File "D:\【学习】\python\python15\class\API\API_8\testcases\test_invest.py", line 32, in test_invest
+    self.assertEqual(str(case.expected),resp.json()["code"])
+AssertionError: '10001' != '20103'
+- 10001
++ 20103
+
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr id='ft4_5' class='none'>
+
+    <td class='errorCase'><div class='testcase'>test_invest_5</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_ft4_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft4_5'>错误</button>
+
+    <div id='div_ft4_5' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_ft4_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft4_5'>错误</button>
+
+    <div id='div_ft4_5' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+ft4_5: 开始执行测试用例： 投资人正常投资
+{"memberId":"#loan_member_id#","password":"#normal_pwd#","loanId":"#loan_id#","amount":"100"}
+88538
+{"memberId":"88538","password":"#normal_pwd#","loanId":"#loan_id#","amount":"100"}
+123456
+{"memberId":"88538","password":"123456","loanId":"#loan_id#","amount":"100"}
+None
+Traceback (most recent call last):
+  File "D:\【学习】\python\python15\class\venv\lib\site-packages\ddt.py", line 145, in wrapper
+    return func(self, *args, **kwargs)
+  File "D:\【学习】\python\python15\class\API\API_8\testcases\test_invest.py", line 29, in test_invest
+    case.data=context.replace(case.data)
+  File "D:\【学习】\python\python15\class\API\API_7\common\context.py", line 33, in replace
+    data = re.sub(p,v,data,count=1)  # 查找替换 count查找的次数
+  File "D:\software\python3.8\lib\re.py", line 208, in sub
+    return _compile(pattern, flags).sub(repl, string, count)
+  File "D:\software\python3.8\lib\re.py", line 325, in _subx
+    template = _compile_repl(template, pattern)
+  File "D:\software\python3.8\lib\re.py", line 316, in _compile_repl
+    return sre_parse.parse_template(repl, pattern)
+  File "D:\software\python3.8\lib\sre_parse.py", line 972, in parse_template
+    s = Tokenizer(source)
+  File "D:\software\python3.8\lib\sre_parse.py", line 228, in __init__
+    string = str(string, 'latin1')
+TypeError: decoding to str: need a bytes-like object, NoneType found
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr id='ft4_6' class='none'>
+
+    <td class='errorCase'><div class='testcase'>test_invest_6</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_ft4_6' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft4_6'>错误</button>
+
+    <div id='div_ft4_6' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_ft4_6' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft4_6'>错误</button>
+
+    <div id='div_ft4_6' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+ft4_6: 开始执行测试用例： 投资人投资不输入金额
+{"memberId":"#loan_member_id#","password":"#normal_pwd#","loanId":"#loan_id#","amount":""}
+88538
+{"memberId":"88538","password":"#normal_pwd#","loanId":"#loan_id#","amount":""}
+123456
+{"memberId":"88538","password":"123456","loanId":"#loan_id#","amount":""}
+None
+Traceback (most recent call last):
+  File "D:\【学习】\python\python15\class\venv\lib\site-packages\ddt.py", line 145, in wrapper
+    return func(self, *args, **kwargs)
+  File "D:\【学习】\python\python15\class\API\API_8\testcases\test_invest.py", line 29, in test_invest
+    case.data=context.replace(case.data)
+  File "D:\【学习】\python\python15\class\API\API_7\common\context.py", line 33, in replace
+    data = re.sub(p,v,data,count=1)  # 查找替换 count查找的次数
+  File "D:\software\python3.8\lib\re.py", line 208, in sub
+    return _compile(pattern, flags).sub(repl, string, count)
+  File "D:\software\python3.8\lib\re.py", line 325, in _subx
+    template = _compile_repl(template, pattern)
+  File "D:\software\python3.8\lib\re.py", line 316, in _compile_repl
+    return sre_parse.parse_template(repl, pattern)
+  File "D:\software\python3.8\lib\sre_parse.py", line 972, in parse_template
+    s = Tokenizer(source)
+  File "D:\software\python3.8\lib\sre_parse.py", line 228, in __init__
+    string = str(string, 'latin1')
+TypeError: decoding to str: need a bytes-like object, NoneType found
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr id='ft4_7' class='none'>
+
+    <td class='errorCase'><div class='testcase'>test_invest_7</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_ft4_7' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft4_7'>错误</button>
+
+    <div id='div_ft4_7' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_ft4_7' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft4_7'>错误</button>
+
+    <div id='div_ft4_7' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+ft4_7: 开始执行测试用例： 投资人投资输入负数
+{"memberId":"#loan_member_id#","password":"#normal_pwd#","loanId":"#loan_id#","amount":"-100"}
+88538
+{"memberId":"88538","password":"#normal_pwd#","loanId":"#loan_id#","amount":"-100"}
+123456
+{"memberId":"88538","password":"123456","loanId":"#loan_id#","amount":"-100"}
+None
+Traceback (most recent call last):
+  File "D:\【学习】\python\python15\class\venv\lib\site-packages\ddt.py", line 145, in wrapper
+    return func(self, *args, **kwargs)
+  File "D:\【学习】\python\python15\class\API\API_8\testcases\test_invest.py", line 29, in test_invest
+    case.data=context.replace(case.data)
+  File "D:\【学习】\python\python15\class\API\API_7\common\context.py", line 33, in replace
+    data = re.sub(p,v,data,count=1)  # 查找替换 count查找的次数
+  File "D:\software\python3.8\lib\re.py", line 208, in sub
+    return _compile(pattern, flags).sub(repl, string, count)
+  File "D:\software\python3.8\lib\re.py", line 325, in _subx
+    template = _compile_repl(template, pattern)
+  File "D:\software\python3.8\lib\re.py", line 316, in _compile_repl
+    return sre_parse.parse_template(repl, pattern)
+  File "D:\software\python3.8\lib\sre_parse.py", line 972, in parse_template
+    s = Tokenizer(source)
+  File "D:\software\python3.8\lib\sre_parse.py", line 228, in __init__
+    string = str(string, 'latin1')
+TypeError: decoding to str: need a bytes-like object, NoneType found
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr class='passClass warning'>
+
+    <td>test_login.LoginTest</td>
+
+    <td class="text-center">5</td>
+
+    <td class="text-center">5</td>
+
+    <td class="text-center">0</td>
+
+    <td class="text-center">0</td>
+
+    <td class="text-center"><a href="javascript:showClassDetail('c5',5)" class="detail" id='c5'>详细</a></td>
+
+</tr>
+
+
+
+<tr id='pt5_1' class='hiddenRow'>
+
+    <td class='passCase'><div class='testcase'>test_login_1</div></td>
+
+    <td colspan='5' align='center'><span class="label label-success success">通过</span></td>
+
+</tr>
+
+
+
+<tr id='pt5_2' class='hiddenRow'>
+
+    <td class='passCase'><div class='testcase'>test_login_2</div></td>
+
+    <td colspan='5' align='center'><span class="label label-success success">通过</span></td>
+
+</tr>
+
+
+
+<tr id='pt5_3' class='hiddenRow'>
+
+    <td class='passCase'><div class='testcase'>test_login_3</div></td>
+
+    <td colspan='5' align='center'><span class="label label-success success">通过</span></td>
+
+</tr>
+
+
+
+<tr id='pt5_4' class='hiddenRow'>
+
+    <td class='passCase'><div class='testcase'>test_login_4</div></td>
+
+    <td colspan='5' align='center'><span class="label label-success success">通过</span></td>
+
+</tr>
+
+
+
+<tr id='pt5_5' class='hiddenRow'>
+
+    <td class='passCase'><div class='testcase'>test_login_5</div></td>
+
+    <td colspan='5' align='center'><span class="label label-success success">通过</span></td>
+
+</tr>
+
+
+
+<tr class='passClass warning'>
+
+    <td>test_recharge.RechargeTest</td>
+
+    <td class="text-center">10</td>
+
+    <td class="text-center">10</td>
+
+    <td class="text-center">0</td>
+
+    <td class="text-center">0</td>
+
+    <td class="text-center"><a href="javascript:showClassDetail('c6',10)" class="detail" id='c6'>详细</a></td>
+
+</tr>
+
+
+
+<tr id='pt6_1' class='hiddenRow'>
+
+    <td class='passCase'><div class='testcase'>test_recharge_01</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_pt6_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_1'>通过</button>
+
+    <div id='div_pt6_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_pt6_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_1'>通过</button>
+
+    <div id='div_pt6_1' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+pt6_1: 登录成功
+请求url： http://test.lemonban.com/futureloan/mvc/api/member/login
+请求data： {'mobilephone': '15810447878', 'pwd': '123456'}
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr id='pt6_2' class='hiddenRow'>
+
+    <td class='passCase'><div class='testcase'>test_recharge_02</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_pt6_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_2'>通过</button>
+
+    <div id='div_pt6_2' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_pt6_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_2'>通过</button>
+
+    <div id='div_pt6_2' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+pt6_2: 充值成功
+请求url： http://test.lemonban.com/futureloan/mvc/api/member/recharge
+请求data： {'mobilephone': '15810447778', 'amount': '100'}
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr id='pt6_3' class='hiddenRow'>
+
+    <td class='passCase'><div class='testcase'>test_recharge_03</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_pt6_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_3'>通过</button>
+
+    <div id='div_pt6_3' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_pt6_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_3'>通过</button>
+
+    <div id='div_pt6_3' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+pt6_3: 手机号为空充值失败
+请求url： http://test.lemonban.com/futureloan/mvc/api/member/recharge
+请求data： {'mobilephone': '', 'amount': '101'}
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr id='pt6_4' class='hiddenRow'>
+
+    <td class='passCase'><div class='testcase'>test_recharge_04</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_pt6_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_4'>通过</button>
+
+    <div id='div_pt6_4' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_pt6_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_4'>通过</button>
+
+    <div id='div_pt6_4' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+pt6_4: 充值额度为空充值失败
+请求url： http://test.lemonban.com/futureloan/mvc/api/member/recharge
+请求data： {'mobilephone': '15810447778', 'amount': ''}
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr id='pt6_5' class='hiddenRow'>
+
+    <td class='passCase'><div class='testcase'>test_recharge_05</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_pt6_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_5'>通过</button>
+
+    <div id='div_pt6_5' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_pt6_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_5'>通过</button>
+
+    <div id='div_pt6_5' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+pt6_5: 手机号码不存在
+请求url： http://test.lemonban.com/futureloan/mvc/api/member/recharge
+请求data： {'mobilephone': '15810441178', 'amount': '103'}
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr id='pt6_6' class='hiddenRow'>
+
+    <td class='passCase'><div class='testcase'>test_recharge_06</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_pt6_6' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_6'>通过</button>
+
+    <div id='div_pt6_6' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_pt6_6' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_6'>通过</button>
+
+    <div id='div_pt6_6' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+pt6_6: 手机格式不正确充值失败
+请求url： http://test.lemonban.com/futureloan/mvc/api/member/recharge
+请求data： {'mobilephone': '', 'amount': '104'}
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr id='pt6_7' class='hiddenRow'>
+
+    <td class='passCase'><div class='testcase'>test_recharge_07</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_pt6_7' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_7'>通过</button>
+
+    <div id='div_pt6_7' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_pt6_7' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_7'>通过</button>
+
+    <div id='div_pt6_7' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+pt6_7: 输入金额的金额小数超过2位
+请求url： http://test.lemonban.com/futureloan/mvc/api/member/recharge
+请求data： {'mobilephone': '15810447778', 'amount': '110.244'}
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr id='pt6_8' class='hiddenRow'>
+
+    <td class='passCase'><div class='testcase'>test_recharge_08</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_pt6_8' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_8'>通过</button>
+
+    <div id='div_pt6_8' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_pt6_8' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_8'>通过</button>
+
+    <div id='div_pt6_8' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+pt6_8: 输入负数金额
+请求url： http://test.lemonban.com/futureloan/mvc/api/member/recharge
+请求data： {'mobilephone': '15810447778', 'amount': '-250'}
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr id='pt6_9' class='hiddenRow'>
+
+    <td class='passCase'><div class='testcase'>test_recharge_09</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_pt6_9' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_9'>通过</button>
+
+    <div id='div_pt6_9' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_pt6_9' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_9'>通过</button>
+
+    <div id='div_pt6_9' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+pt6_9: 输入超过50万的金额
+请求url： http://test.lemonban.com/futureloan/mvc/api/member/recharge
+请求data： {'mobilephone': '15810447778', 'amount': '5000000'}
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr id='pt6_10' class='hiddenRow'>
+
+    <td class='passCase'><div class='testcase'>test_recharge_10</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_pt6_10' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_10'>通过</button>
+
+    <div id='div_pt6_10' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_pt6_10' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_10'>通过</button>
+
+    <div id='div_pt6_10' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+pt6_10: 充值额度输入非数字
+请求url： http://test.lemonban.com/futureloan/mvc/api/member/recharge
+请求data： {'mobilephone': '15810447778', 'amount': '@'}
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr class='failClass warning'>
+
+    <td>test_register.RegisterTest</td>
+
+    <td class="text-center">8</td>
+
+    <td class="text-center">6</td>
+
+    <td class="text-center">2</td>
+
+    <td class="text-center">0</td>
+
+    <td class="text-center"><a href="javascript:showClassDetail('c7',8)" class="detail" id='c7'>详细</a></td>
+
+</tr>
+
+
+
+<tr id='ft7_1' class='none'>
+
+    <td class='failCase'><div class='testcase'>test_register_1</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_ft7_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft7_1'>失败</button>
+
+    <div id='div_ft7_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_ft7_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft7_1'>失败</button>
+
+    <div id='div_ft7_1' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+ft7_1: 请求url： http://test.lemonban.com/futureloan/mvc/api/member/register
+请求data： {'mobilephone': '19000000000', 'pwd': '123456'}
+Traceback (most recent call last):
+  File "D:\【学习】\python\python15\class\venv\lib\site-packages\ddt.py", line 145, in wrapper
+    return func(self, *args, **kwargs)
+  File "D:\【学习】\python\python15\class\API\API_8\testcases\test_register.py", line 38, in test_register
+    raise e
+  File "D:\【学习】\python\python15\class\API\API_8\testcases\test_register.py", line 34, in test_register
+    self.assertEqual(case.expected,resp.text)
+AssertionError: '{"status":0,"code":"20110","data":null,"msg":"注册成功"}' != '{"status":0,"code":"20109","data":null,"msg":"手机号码格式不正确"}'
+- {"status":0,"code":"20110","data":null,"msg":"注册成功"}
+?                        -                      ^^^^
++ {"status":0,"code":"20109","data":null,"msg":"手机号码格式不正确"}
+?                         +                     ^^^^^^^^^
+
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr id='pt7_2' class='hiddenRow'>
+
+    <td class='passCase'><div class='testcase'>test_register_2</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_pt7_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt7_2'>通过</button>
+
+    <div id='div_pt7_2' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_pt7_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt7_2'>通过</button>
+
+    <div id='div_pt7_2' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+pt7_2: 请求url： http://test.lemonban.com/futureloan/mvc/api/member/register
+请求data： {'mobilephone': '', 'pwd': '123456'}
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr id='pt7_3' class='hiddenRow'>
+
+    <td class='passCase'><div class='testcase'>test_register_3</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_pt7_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt7_3'>通过</button>
+
+    <div id='div_pt7_3' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_pt7_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt7_3'>通过</button>
+
+    <div id='div_pt7_3' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+pt7_3: 请求url： http://test.lemonban.com/futureloan/mvc/api/member/register
+请求data： {'mobilephone': '17789181619', 'pwd': ''}
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr id='pt7_4' class='hiddenRow'>
+
+    <td class='passCase'><div class='testcase'>test_register_4</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_pt7_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt7_4'>通过</button>
+
+    <div id='div_pt7_4' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_pt7_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt7_4'>通过</button>
+
+    <div id='div_pt7_4' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+pt7_4: 请求url： http://test.lemonban.com/futureloan/mvc/api/member/register
+请求data： {'mobilephone': '158104878', 'pwd': '123456'}
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr id='pt7_5' class='hiddenRow'>
+
+    <td class='passCase'><div class='testcase'>test_register_5</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_pt7_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt7_5'>通过</button>
+
+    <div id='div_pt7_5' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_pt7_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt7_5'>通过</button>
+
+    <div id='div_pt7_5' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+pt7_5: 请求url： http://test.lemonban.com/futureloan/mvc/api/member/register
+请求data： {'mobilephone': '15810447878', 'pwd': '123456'}
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr id='pt7_6' class='hiddenRow'>
+
+    <td class='passCase'><div class='testcase'>test_register_6</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_pt7_6' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt7_6'>通过</button>
+
+    <div id='div_pt7_6' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_pt7_6' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt7_6'>通过</button>
+
+    <div id='div_pt7_6' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+pt7_6: 请求url： http://test.lemonban.com/futureloan/mvc/api/member/register
+请求data： {'mobilephone': '15810447878', 'pwd': '1234567890123456789'}
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr id='pt7_7' class='hiddenRow'>
+
+    <td class='passCase'><div class='testcase'>test_register_7</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_pt7_7' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt7_7'>通过</button>
+
+    <div id='div_pt7_7' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_pt7_7' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt7_7'>通过</button>
+
+    <div id='div_pt7_7' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+pt7_7: 请求url： http://test.lemonban.com/futureloan/mvc/api/member/register
+请求data： {'mobilephone': '15810447878', 'pwd': '12345'}
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr id='ft7_8' class='none'>
+
+    <td class='failCase'><div class='testcase'>test_register_8</div></td>
+
+    <td colspan='5' align='center'>
+
+    <!--默认收起错误信息 -Findyou
+
+    <button id='btn_ft7_8' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft7_8'>失败</button>
+
+    <div id='div_ft7_8' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+
+    <button id='btn_ft7_8' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft7_8'>失败</button>
+
+    <div id='div_ft7_8' class="collapse in" align="left">
+
+    <pre>
+
+    
+
+ft7_8: 请求url： http://test.lemonban.com/futureloan/mvc/api/member/register
+请求data： {'mobilephone': '17789181629', 'pwd': '123456', 'regname': 'cathycz'}
+Traceback (most recent call last):
+  File "D:\【学习】\python\python15\class\venv\lib\site-packages\ddt.py", line 145, in wrapper
+    return func(self, *args, **kwargs)
+  File "D:\【学习】\python\python15\class\API\API_8\testcases\test_register.py", line 38, in test_register
+    raise e
+  File "D:\【学习】\python\python15\class\API\API_8\testcases\test_register.py", line 34, in test_register
+    self.assertEqual(case.expected,resp.text)
+AssertionError: '{"status":1,"code":"10001","data":null,"msg":"注册成功"}' != '{"status":0,"code":"20110","data":null,"msg":"手机号码已被注册"}'
+- {"status":1,"code":"10001","data":null,"msg":"注册成功"}
+?           ^           ---                       --
++ {"status":0,"code":"20110","data":null,"msg":"手机号码已被注册"}
+?           ^         +++                       ++++++
+
+
+
+
+
+    </pre>
+
+    </div>
+
+    </td>
+
+</tr>
+
+
+
+<tr id='total_row' class="text-center active">
+
+    <td>总计</td>
+
+    <td>36</td>
+
+    <td>26</td>
+
+    <td>5</td>
+
+    <td>5</td>
+
+    <td>通过率：72.22%</td>
+
+</tr>
+
+</table>
+
+
+
+<div id='ending'>&nbsp;</div>
+
+    <div style=" position:fixed;right:50px; bottom:30px; width:20px; height:20px;cursor:pointer">
+
+    <a href="#"><span class="glyphicon glyphicon-eject" style = "font-size:30px;" aria-hidden="true">
+
+    </span></a></div>
+
+    
+
+</body>
+
+</html>
+
