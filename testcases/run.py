@@ -27,4 +27,4 @@ with open(contants.report_dir + '/report.html','wb+') as file:
                                            description="前程贷API",
                                            tester="mongo")
 
-    runner.run(discover)#1213
+    runner.run(discover)
